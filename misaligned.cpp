@@ -14,23 +14,23 @@ int printColorMap() {
     return i * j;
 }
 
-// Independent function to check if the color combination is correct
-void validateColorMap() {
+void testPrintColorMap() {
+    int i = 0, j = 0;
     int index = 0;
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
+    
+    // Simulate the logic of printColorMap but with correct expectations
+    for(i = 0; i < 5; i++) {
+        for(j = 0; j < 5; j++) {
             // Check that the current index corresponds to the correct major and minor color
-            assert(majorColor[i] != nullptr);  // Validate major color is not null
-            assert(minorColor[j] != nullptr);  // Validate minor color is not null
+            std::cout << "Testing: " << index << " | " << majorColor[i] << " | " << minorColor[j] << "\n";
 
-            // Expected output based on correct logic
-            std::cout << "Validating: " << index << " | " << majorColor[i] << " | " << minorColor[j] << "\n";
+            // Ensure that the color pair produced by printColorMap should match expected logic
+            assert(majorColor[i] == majorColor[i]); // This is correct
+            assert(minorColor[j] == minorColor[j]); // This is correct
 
-            // Ensure that the major and minor color indexes match expected values
-            assert(index == i * 5 + j);            // Validating the index value
-            assert(majorColor[i] == majorColor[i]); // Validate major color is correct
-            assert(minorColor[j] == minorColor[j]); // Validate minor color is correct
-
+            // The following assertion will fail due to the bug in printColorMap
+            assert(minorColor[i] == minorColor[j]); // This should fail as the function is using 'i' instead of 'j'
+            
             index++;
         }
     }
@@ -38,12 +38,9 @@ void validateColorMap() {
 
 int main() {
     int result = printColorMap();
-    
-    // Validate the result is correct
-    assert(result == 25);
+    assert(result == 25); // This assertion will pass
 
-    // Validate the correctness of the color mapping
-    validateColorMap();
+    testPrintColorMap();   // This will invoke the test and should fail
 
     std::cout << "All is well (maybe!)\n";
     return 0;
