@@ -7,6 +7,10 @@ int networkAlertStub(float celcius) {
     std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
     // Return 200 for ok
     // Return 500 for not-ok
+    // Simulate a failure if the temperature is too high
+    if (celcius > 150) {
+        return 500;
+    }
     // stub always succeeds and returns 200
     return 200;
 }
@@ -26,6 +30,9 @@ void alertInCelcius(float farenheit) {
 int main() {
     alertInCelcius(400.5);
     alertInCelcius(303.6);
+    //to check the failure count, this test case will fail
+    assert(alertFailureCount == 2); 
+    
     std::cout << alertFailureCount << " alerts failed.\n";
     std::cout << "All is well (maybe!)\n";
     return 0;
